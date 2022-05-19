@@ -3,6 +3,11 @@ import React from 'react'
 import { vergieTomatto } from '../../assets/img'
 
 class History extends React.Component {
+  state = { onAuth: false }
+
+  componentDidMount() {
+    this.props.change(this.state.onAuth)
+  }
   render() {
     return (
       <section className="history pt-20 pb-40 bg-gray-200">

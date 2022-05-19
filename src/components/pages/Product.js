@@ -16,6 +16,7 @@ class Product extends React.Component {
       searchInput: '',
       searchEnd: '',
       id_category: 1,
+      onAuth: false,
     }
   }
 
@@ -58,6 +59,7 @@ class Product extends React.Component {
   }
 
   componentDidMount() {
+    this.props.change(this.state.onAuth)
     const queryString = this.props.location.search
 
     if (queryString) {
@@ -72,17 +74,6 @@ class Product extends React.Component {
   }
 
   getData = async (dataUrl = this.state) => {
-    // let url = `http://localhost:8080/items?`;
-
-    // if (dataUrl.searchEnd) {
-    //   url += `search=${dataUrl.searchEnd}`;
-    // }
-
-    // if (dataUrl.id_category) {
-    //   url += `category=${dataUrl.id_category}`;
-    // }
-
-    // const { data } = await axios.get(url);
     const { data } = await axios.get(
       `http://localhost:8080/items?search=${dataUrl.searchEnd}`
     )

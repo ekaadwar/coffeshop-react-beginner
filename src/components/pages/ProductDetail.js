@@ -7,9 +7,20 @@ import ButtonSquare from '../components/ButtonSquare'
 import { coldBrew } from '../../assets/img'
 
 class ProductDetail extends React.Component {
+  constructor(props) {
+    super(props)
+    this.state = {
+      onAuth: false,
+    }
+  }
+
   details = {
     name: 'cold brew',
     price: 30000,
+  }
+
+  componentDidMount() {
+    this.props.change(this.state.onAuth)
   }
 
   image = () => <img src={coldBrew} alt="Cold Brew" className="h-full" />

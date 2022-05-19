@@ -8,21 +8,12 @@ import { FiEdit2 } from 'react-icons/fi'
 class Profile extends React.Component {
   state = {
     data: {},
-  }
-
-  data = {
-    email: 'ekafajhariadwar@gmail',
-    phone: '123456789098',
-    address: 'Jalan Kehidupan',
-    name_shown: 'Killer Bee',
-    name_first: 'Eka',
-    name_last: 'Fajhari Adwar',
-    birth_date: '1 Januari 1991',
-    gender: 'Male',
+    onAuth: false,
   }
 
   componentDidMount() {
     this.getData()
+    this.props.change(this.state.onAuth)
   }
 
   getData = async () => {

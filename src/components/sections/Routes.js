@@ -18,36 +18,50 @@ class Routes extends React.Component {
 
   changeAuth = (data) => {
     this.props.change(data)
-    // console.log('gasskeunn!!')
   }
 
   render() {
     return (
       <Switch>
-        {/* <Route path="/" exact change={this.changeAuth} component={Home} /> */}
         <Route
           path="/"
           exact
           render={(props) => <Home change={this.changeAuth} {...props} />}
         />
-        <Route path="/product" exact component={Product} />
-        <Route path="/product/detail" component={ProductDetail} />
-        <Route path="/cart" component={Cart} />
-        <Route path="/history" component={History} />
 
-        {/* <Route path="/login" component={Login} /> */}
+        <Route
+          path="/product"
+          exact
+          render={(props) => <Product change={this.changeAuth} {...props} />}
+        />
+
+        <Route
+          path="/product/detail"
+          render={(props) => (
+            <ProductDetail change={this.changeAuth} {...props} />
+          )}
+        />
+
+        <Route
+          path="/cart"
+          render={(props) => <Cart change={this.changeAuth} {...props} />}
+        />
+
+        <Route
+          path="/history"
+          render={(props) => <History change={this.changeAuth} {...props} />}
+        />
+
         <Route
           path="/login"
           render={(props) => <Login change={this.changeAuth} {...props} />}
         />
 
-        {/* <Route path="/signup" component={Signup} /> */}
         <Route
           path="/signup"
           render={(props) => <Signup change={this.changeAuth} {...props} />}
         />
 
-        {/* <Route path="/forgot-pass" component={ForgotPassword} /> */}
         <Route
           path="/forgot-pass"
           render={(props) => (
@@ -55,35 +69,10 @@ class Routes extends React.Component {
           )}
         />
 
-        <Route part="/profile" component={Profile} />
-
-        {/* <Route path="/" exact>
-          <Home />
-        </Route>
-        <Route path="/product" exact>
-          <Product />
-        </Route>
-        <Route path="/product/detail">
-          <ProductDetail />
-        </Route>
-        <Route path="/cart">
-          <Cart />
-        </Route>
-        <Route path="/history">
-          <History />
-        </Route>
-        <Route path="/login">
-          <Login />
-        </Route>
-        <Route path="/signup">
-          <Signup />
-        </Route>
-        <Route path="/forgot-pass">
-          <ForgotPassword />
-        </Route>
-        <Route part="/profile">
-          <Profile />
-        </Route> */}
+        <Route
+          part="/profile"
+          render={(props) => <Profile change={this.changeAuth} {...props} />}
+        />
       </Switch>
     )
   }

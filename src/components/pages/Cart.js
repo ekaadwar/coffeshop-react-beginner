@@ -5,6 +5,11 @@ import { GrDeliver } from 'react-icons/gr'
 import { chickenFireWing, hazelnutLatte } from '../../assets/img'
 
 class Cart extends React.Component {
+  state = { onAuth: false }
+
+  componentDidMount() {
+    this.props.change(this.state.onAuth)
+  }
   render() {
     return (
       <section className="cart pt-20">
