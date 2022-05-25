@@ -8,20 +8,63 @@ import { FiEdit2 } from 'react-icons/fi'
 class Profile extends React.Component {
   state = {
     data: {},
+    dataChange: {},
     onAuth: false,
+    email: '',
+    nameDisplay: '',
   }
 
   componentDidMount() {
-    this.getData()
     this.props.change(this.state.onAuth)
+    this.getData().then(() => {
+      this.setState({
+        dataChange: this.state.data,
+        email: this.state.data.email,
+        nameDisplay: this.state.data.display_name,
+      })
+    })
   }
 
   getData = async () => {
     const url = 'http://localhost:8080/users/1'
     const { data } = await axios.get(url)
-    // console.log(data.results);
     this.setState({ data: data.results })
-    console.log(this.state.data)
+  }
+
+  updateData = async (key, value) => {
+    const url = 'http://localhost:8080/users/1'
+    const form = new URLSearchParams()
+    form.append(key, value)
+    try {
+      const { data } = await axios.patch(url, form)
+      this.setState({ data: data })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
+  save = () => {
+    const prevKeys = Object.keys(this.state.data)
+    const prevValues = Object.values(this.state.data)
+    const realKeys = Object.keys(this.state.dataChange)
+    const realValues = Object.values(this.state.dataChange)
+    const length = prevKeys.length
+
+    let keys = ''
+
+    for (let i = 0; i < length; i++) {
+      if (prevValues[i] !== realValues[i]) {
+        if (keys !== '') {
+          keys += ', '
+        }
+        keys += `${prevKeys[i]}`
+        this.updateData(realKeys[i], realValues[i])
+      }
+    }
+
+    if (keys !== '') {
+      window.alert(`${keys} have been updated`)
+    }
   }
 
   render() {
@@ -47,9 +90,9 @@ class Profile extends React.Component {
 
               <div>
                 <h4 className="text-2xl font-bold text-center">
-                  {profile.display_name}
+                  {this.state.nameDisplay}
                 </h4>
-                <p className="text-sm text-center">{profile.email}</p>
+                <p className="text-sm text-center">{this.state.email}</p>
               </div>
 
               <p className="text-center">Let's order your product now!</p>
@@ -74,12 +117,21 @@ class Profile extends React.Component {
                         <p className="text-xl text-gray-400">Email address :</p>
                         <input
                           onChange={(e) =>
-                            this.setState({ email: e.target.value })
+                            this.setState((prevState) => ({
+                              dataChange: {
+                                ...prevState.dataChange,
+                                email: e.target.value,
+                              },
+                            }))
                           }
                           className="py-2 w-full border-b border-black  placeholder-gray-700"
                           type="email"
                           name="email"
-                          placeholder={profile.email}
+                          value={
+                            this.state.dataChange.email
+                              ? this.state.dataChange.email
+                              : ''
+                          }
                         />
                       </div>
 
@@ -163,41 +215,6 @@ class Profile extends React.Component {
                           placeholder={profile.birth}
                         />
                       </div>
-                      <div className="sm:col-span-2 row-span-2 space-y-5">
-                        <div>
-                          <input
-                            type="radio"
-                            id="male"
-                            name="gender"
-                            placeholder="male"
-                            checked={profile.gender === 'male' && true}
-                          />
-                          <label
-                            className="text-xl text-yellow-700 hover:text-yellow-900 ml-3"
-                            htmlFor="male"
-                          >
-                            Male
-                          </label>
-                          <br />
-                        </div>
-
-                        <div>
-                          <input
-                            type="radio"
-                            id="female"
-                            name="gender"
-                            placeholder="female"
-                            checked={profile.gender === 'female' && true}
-                          />
-                          <label
-                            className="text-xl text-yellow-700 hover:text-yellow-900 ml-3"
-                            htmlFor="female"
-                          >
-                            Female
-                          </label>
-                          <br />
-                        </div>
-                      </div>
                     </div>
                   </div>
                 </div>
@@ -213,7 +230,7 @@ class Profile extends React.Component {
 
               <div className="space-y-5 mb-5">
                 <button
-                  onClick={this.updateData}
+                  onClick={this.save}
                   className="bg-yellow-900 py-3 w-full text-white rounded-2xl hover:bg-yellow-800"
                 >
                   Save Change
