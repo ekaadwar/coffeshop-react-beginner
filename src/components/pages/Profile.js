@@ -31,18 +31,6 @@ class Profile extends React.Component {
     this.setState({ data: data.results })
   }
 
-  updateData = async (key, value) => {
-    const url = 'http://localhost:8080/users/1'
-    const form = new URLSearchParams()
-    form.append(key, value)
-    try {
-      const { data } = await axios.patch(url, form)
-      this.setState({ data: data })
-    } catch (error) {
-      console.log(error)
-    }
-  }
-
   save = () => {
     const prevKeys = Object.keys(this.state.data)
     const prevValues = Object.values(this.state.data)
@@ -67,8 +55,19 @@ class Profile extends React.Component {
     }
   }
 
+  updateData = async (key, value) => {
+    const url = 'http://localhost:8080/users/1'
+    const form = new URLSearchParams()
+    form.append(key, value)
+    try {
+      const { data } = await axios.patch(url, form)
+      this.setState({ data: data })
+    } catch (error) {
+      console.log(error)
+    }
+  }
+
   render() {
-    const profile = this.state.data
     return (
       <section className="profile pt-20 bg-gray-200">
         <div className="container mx-auto pb-20 px-5 box-border">
@@ -141,7 +140,19 @@ class Profile extends React.Component {
                           className="py-2 w-full border-b border-black placeholder-gray-700"
                           type="text"
                           name="phone"
-                          placeholder={profile.mobile_number}
+                          value={
+                            this.state.dataChange.mobile_number
+                              ? this.state.dataChange.mobile_number
+                              : ''
+                          }
+                          onChange={(e) =>
+                            this.setState((prevState) => ({
+                              dataChange: {
+                                ...prevState.dataChange,
+                                mobile_number: e.target.value,
+                              },
+                            }))
+                          }
                         />
                       </div>
                     </div>
@@ -152,8 +163,20 @@ class Profile extends React.Component {
                         className="py-2 w-full border-b border-black placeholder-gray-700"
                         type="text"
                         name="address"
-                        placeholder={profile.address}
                         rows="3"
+                        value={
+                          this.state.dataChange.address
+                            ? this.state.dataChange.address
+                            : ''
+                        }
+                        onChange={(e) =>
+                          this.setState((prevState) => ({
+                            dataChange: {
+                              ...prevState.dataChange,
+                              address: e.target.value,
+                            },
+                          }))
+                        }
                       />
                     </div>
                   </div>
@@ -182,25 +205,63 @@ class Profile extends React.Component {
                           className="py-2 w-full border-b border-black  placeholder-gray-700"
                           type="text"
                           name="name"
-                          placeholder={profile.display_name}
+                          value={
+                            this.state.dataChange.display_name
+                              ? this.state.dataChange.display_name
+                              : ''
+                          }
+                          onChange={(e) =>
+                            this.setState((prevState) => ({
+                              dataChange: {
+                                ...prevState.dataChange,
+                                display_name: e.target.value,
+                              },
+                            }))
+                          }
                         />
                       </div>
+
                       <div className="">
                         <p className="text-xl text-gray-400">First Name:</p>
                         <input
                           className="py-2 w-full border-b border-black placeholder-gray-700"
                           type="text"
                           name="firstName"
-                          placeholder={profile.first_name}
+                          value={
+                            this.state.dataChange.first_name
+                              ? this.state.dataChange.first_name
+                              : ''
+                          }
+                          onChange={(e) =>
+                            this.setState((prevState) => ({
+                              dataChange: {
+                                ...prevState.dataChange,
+                                first_name: e.target.value,
+                              },
+                            }))
+                          }
                         />
                       </div>
+
                       <div className="">
                         <p className="text-xl text-gray-400">Last Name:</p>
                         <input
                           className="py-2 w-full border-b border-black placeholder-gray-700"
                           type="lastName"
                           name="lastName"
-                          placeholder={profile.last_name}
+                          value={
+                            this.state.dataChange.last_name
+                              ? this.state.dataChange.last_name
+                              : ''
+                          }
+                          onChange={(e) =>
+                            this.setState((prevState) => ({
+                              dataChange: {
+                                ...prevState.dataChange,
+                                last_name: e.target.value,
+                              },
+                            }))
+                          }
                         />
                       </div>
                     </div>
@@ -212,7 +273,19 @@ class Profile extends React.Component {
                           className="py-2 w-full border-b border-black placeholder-gray-700"
                           type="text"
                           name="birth_date"
-                          placeholder={profile.birth}
+                          value={
+                            this.state.dataChange.birth
+                              ? this.state.dataChange.birth
+                              : ''
+                          }
+                          onChange={(e) =>
+                            this.setState((prevState) => ({
+                              dataChange: {
+                                ...prevState.dataChange,
+                                birth: e.target.value,
+                              },
+                            }))
+                          }
                         />
                       </div>
                     </div>

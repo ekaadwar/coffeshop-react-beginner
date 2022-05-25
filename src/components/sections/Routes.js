@@ -10,6 +10,7 @@ import Signup from '../pages/Signup'
 import Profile from '../pages/Profile'
 import ProductDetail from '../pages/ProductDetail'
 import ForgotPassword from '../pages/ForgotPassword'
+import ProductAdd from '../pages/ProductAdd'
 
 class Routes extends React.Component {
   state = {
@@ -40,6 +41,11 @@ class Routes extends React.Component {
           render={(props) => (
             <ProductDetail change={this.changeAuth} {...props} />
           )}
+        />
+
+        <Route
+          path="/product/add"
+          render={(props) => <ProductAdd change={this.changeAuth} {...props} />}
         />
 
         <Route

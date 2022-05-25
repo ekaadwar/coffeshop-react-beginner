@@ -193,7 +193,6 @@ class Product extends React.Component {
                           value={menu.idCategory}
                           className="inline-block cursor-pointer"
                           key={idx}
-                          // onClick={(event) => console.log(event.target.value)}
                           onClick={this.getCategory}
                         >
                           {menu.category}
@@ -212,7 +211,12 @@ class Product extends React.Component {
                       }
                       onKeyDown={this.onSearch}
                     />
-                    <button className="focus:outline-none h-10 w-10 border border-l-0 rounded-r-lg border-gray-500 hover:bg-gray-300">
+                    <button
+                      className="focus:outline-none h-10 w-10 border border-l-0 rounded-r-lg border-gray-500 hover:bg-gray-300"
+                      onClick={() => {
+                        this.props.history.push('/product/add')
+                      }}
+                    >
                       +
                     </button>
                   </div>
